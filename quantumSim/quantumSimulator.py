@@ -38,6 +38,7 @@ class QuantumSimulator:
             cumu = 0
             un = True
             r = random.random()
+
             for index, probability in enumerate(probabilities):
                 cumu += probability
                 if(r < cumu and un):
@@ -48,6 +49,19 @@ class QuantumSimulator:
 
         return output
 
+    def append_other_outcomes(self, counts):
+        possible_list = []
+
+        for i in range(2**self.numQubits):
+            raw_output = "{0:b}".format(i)
+            raw_output = ("0"*(self.numQubits-len(raw_output))) + raw_output
+            possible_list.append(raw_output)
+
+        for possibility in possible_list:
+            if possibility not in counts:
+                counts[possibility] = 0
+        return counts
+
     def get_counts(self, shots):
         probabilities = self.probability(shots)
         counts = {}
@@ -56,20 +70,24 @@ class QuantumSimulator:
                 counts[element]+=1
             else:
                 counts[element]=1
-        return counts
+
+        new_counts = self.append_other_outcomes(counts)
+        return new_counts
+
+
 
     def run(self, shots=1024, format="state_vector"):
         self.initialize_state_vector()
         for gate in self.circuit:         # loop through all gates listed by circuit
             if gate[0] in ['x','h','rx']:
-                print("APPLIED GATE:",gate[0], "to", gate[1])
+                # print("APPLIED GATE:",gate[0], "to", gate[1])
                 targetQubit = gate[1]
                 for counter_qubit in range(2**targetQubit):
                     for counter_state in range(int(2**(self.numQubits-targetQubit-1))):
                         qb0=counter_qubit+(2**targetQubit+1)*counter_state
                         qb1=qb0+(2**targetQubit)
-                        print("before:",self.state_vector)
-                        print("qb0:",qb0,"qb1",qb1)
+                        # print("before:",self.state_vector)
+                        # print("qb0:",qb0,"qb1",qb1)
 
                         
                         if gate[0]=='x':
@@ -86,7 +104,7 @@ class QuantumSimulator:
                             turn = self.turn(self.state_vector[qb0],self.state_vector[qb1],theta)
                             self.state_vector[qb0] = turn[0]
                             self.state_vector[qb1] = turn[1]
-                        print("after:",self.state_vector)
+                        # print("after:",self.state_vector)
 
             elif gate[0] == 'cx':
                 control = gate[1]
@@ -95,7 +113,7 @@ class QuantumSimulator:
                 [low,high] = sorted([control,target])
          
                 for cx0 in range(2**low):
-                    limit_cx2 = 2**(high-low-1)
+                    limit_cx2 = int(2**(high-low-1))
                     for cx1 in range(limit_cx2):
                         for cx2 in range(2**(self.numQubits-high-1)):
                             qb0 = cx0 + 2**(low+1)*cx1 + 2**(high+1)*cx2 + 2**control  
