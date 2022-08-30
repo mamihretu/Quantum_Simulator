@@ -43,5 +43,5 @@ Possible Outcome
 TODO
 -----
 
-* Add more gate to circuit and make circuit adapt to more that 6 Qubits
+* Add more gates to circuit and make circuit adapt to more that 6 Qubits
 * Add a block sphere visualizer
