@@ -14,17 +14,29 @@ Usage
 
 
 `````
-* clone repo 
-* Run main.py from quantumSim folder:  python gui.py
-* Use gui to build your circuit
-  * use scroller to select the gate you need at each timestamp for each qubit
-  * run circuit by pressing run circuit
-
-* Result: the circuit will automatically be run 1024 times and the output distrubution will be displayed as bar graphs
+$$ clone repo 
+$$ Run main.py from quantumSim folder:  python gui.py
+$$ Use gui to build your circuit
 
 
+$$Result: the circuit will automatically run 1024 times and the output distrubution will be displayed on a bar chart
 
 `````
+
+
+Possible Circuit Layout
+-----
+
+<img width=600px src="https://raw.githubusercontent.com/mamihretu/Quantum_Simulator/main/circuit.PNG" />
+
+
+
+
+Possible Outcome
+-----
+
+<img width=600px src="https://raw.githubusercontent.com/mamihretu/Quantum_Simulator/main/outcome2.PNG" />
+
 
 
 
